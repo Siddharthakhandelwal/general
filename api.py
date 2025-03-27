@@ -22,9 +22,10 @@ app.add_middleware(
 # Define request model
 class CallRequest(BaseModel):
     name: str
-    number: str
-    mail: Optional[str] = None
-    contact_id: Optional[str] = None  # Added contact_id field
+    phone: str
+    email: str 
+    countryCode: str # Added contact_id field
+    call_id: str
 
 
 # Define response models
@@ -53,8 +54,9 @@ async def api_make_call(call_request: CallRequest = Body(...)):
     - **mail**: Email address for notifications
     - **contact_id**: Optional Supabase contact ID
     """
+    number=call_request.countryCode + call_request.phone
     try:
-        result = make_vapi_call(call_request.name, call_request.number, call_request.mail, call_request.contact_id)
+        result = make_vapi_call(call_request.name, number, call_request.email, call_request.call_id)
 
         if "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])

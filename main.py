@@ -57,7 +57,7 @@ def make_vapi_call(name, number, mail, contact_id):
         print("calling to check querry")
         
         # Import here to avoid circular imports
-        from general.searching import to_check_querr
+        from searching import to_check_querr
         answer = to_check_querr(name, call_id, mail, number, contact_id)
         
         print("checked querry")
